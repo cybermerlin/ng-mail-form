@@ -1,0 +1,22 @@
+<style>
+	.mail-form {
+		width: 400px;
+	}
+
+	.mail-form label, .mail-form input {
+		display: block;
+	}
+</style>
+<form class="mail-form">
+	<label>{{ mail.getLabel('code') | translate }}
+		<input ng-model="mail.code"
+					 aria-label="{{ mail.getLabel('code') | translate }}"/></label>
+	<label>{{ mail.getLabel('index') | translate }}
+		<input ng-model="mail.index"
+					 aria-label="{{ mail.getLabel('index') | translate }}"/></label>
+	<label>{{ mail.getLabel('address') | translate }}
+		<input ng-model="mail.address"
+					 aria-label="{{ mail.getLabel('address') | translate }}"/></label>
+
+	<button type="submit"/>
+</form>

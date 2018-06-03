@@ -1,0 +1,13 @@
+.hg*
+.idea
+.vs
+.vscode
+node_modules
+*.log
+*.log.*
+package-lock.json
+*.njsproj
+*.sln
+bin/
+obj/
+*.js.map

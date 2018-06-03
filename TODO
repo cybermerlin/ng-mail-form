@@ -1,0 +1,21 @@
+TODO
+	☑ node merge-stream
+	☑ node streamqueue
+	☑ ! gulp
+	☐ gulp.dev
+	☐ gulp.release
+	☐ gulp.demo
+	☐ gulpfile to typescript `@Gulpclass export class Gulpfiile { @Task() clean(cb: Function) {`
+	☐ ? webpack
+	☐ ? adopt Core to typescript
+	☑ ! learn about typescript with angular.1
+	☑ ! learn about typescript pollyfilling
+	☐ ! gulp ts
+	☐ gulp tslint
+	☐ create MailForm html
+	☑ create MailForm ViewModel
+	☑ create MailForm DataModel
+	☐ create MailForm Controller
+	☐ create MailForm  check working
+	☐ create validator mail.code
+	☐ e2e tests (protractor)
