@@ -1,11 +1,10 @@
 import DataModel from "./DataModel";
-import Core from "../../lib/core/index";
 
 
 /**
  * @class Core.plugins.mail.ViewModel
  */
-export default class ViewModel extends Core.view.Model {
+export default class ViewModel {
 	scope;
 	el: HTMLElement;
 	handlersMap = {
@@ -15,13 +14,15 @@ export default class ViewModel extends Core.view.Model {
 
 
 	submit(e) {
+		// const self = angular.element(e.target).scope().$ctrl.mail;
 		console.log("submitting...");
-		this.mail.save();
-
-		const self = e.data.self;
-		if (!self.scope.mail.isDirty()) return false;
-		self.scope.mail.save();
-		self.scope.$digest();
+		this.mail.save()
+				.then((d) => {/* close form + self.scope.$digest(); */})
+				.catch((e) => {alert(typeof e === 'string' ? e : (e.status +''+ e.data));});
+		/* OR
+    if (!self.scope.mail.isDirty()) return false;
+    self.scope.mail.save();
+    */
 		return false;
 	}
 }

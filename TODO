@@ -10,12 +10,13 @@ TODO
 	☐ ? adopt Core to typescript
 	☑ ! learn about typescript with angular.1
 	☑ ! learn about typescript pollyfilling
-	☐ ! gulp ts
+	☑ ! gulp ts
 	☐ gulp tslint
-	☐ create MailForm html
+	☑ create MailForm html
 	☑ create MailForm ViewModel
 	☑ create MailForm DataModel
-	☐ create MailForm Controller
-	☐ create MailForm  check working
-	☐ create validator mail.code
+	☑ create MailForm Controller
+	☑ create MailForm  check working
+	☑ create validator mail.code
 	☐ e2e tests (protractor)
+	☐ injector node_modules (for excluding bower_components)

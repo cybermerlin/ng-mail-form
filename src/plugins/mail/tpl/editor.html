@@ -1,22 +1,22 @@
 <style>
-	.mail-form {
+	.mail.mail-form {
 		width: 400px;
 	}
 
-	.mail-form label, .mail-form input {
+	.mail.mail-form label, .mail.mail-form input {
 		display: block;
 	}
 </style>
 <form class="mail-form">
-	<label>{{ mail.getLabel('code') | translate }}
-		<input ng-model="mail.code"
-					 aria-label="{{ mail.getLabel('code') | translate }}"/></label>
-	<label>{{ mail.getLabel('index') | translate }}
-		<input ng-model="mail.index"
-					 aria-label="{{ mail.getLabel('index') | translate }}"/></label>
-	<label>{{ mail.getLabel('address') | translate }}
-		<input ng-model="mail.address"
-					 aria-label="{{ mail.getLabel('address') | translate }}"/></label>
+	<label>{{ $ctrl.getLabel('code') | translate }}
+		<input ng-model="$ctrl.mail.code"  postal-code-validator
+					 aria-label="{{ $ctrl.getLabel('code') | translate }}"/></label>
+	<label>{{ $ctrl.getLabel('index') | translate }}
+		<input ng-model="$ctrl.mail.index"
+					 aria-label="{{ $ctrl.getLabel('index') | translate }}"/></label>
+	<label>{{ $ctrl.getLabel('address') | translate }}
+		<input ng-model="$ctrl.mail.address"
+					 aria-label="{{ $ctrl.getLabel('address') | translate }}"/></label>
 
 	<button type="submit"/>
 </form>

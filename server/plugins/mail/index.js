@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 	var fs = require("fs"),
-			tools = require('../utils'),
-			br = require('../baseResponses');
+			tools = require("../../utils"),
+			br = require('../../baseResponses');
 
 	/**
 	 * 

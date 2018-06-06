@@ -17,17 +17,12 @@
     "@types/angular-ui-router": "^1.1.40",
     "@types/node": "^10.3.0",
     "@uirouter/angularjs": "^1.0.18",
-    "angular": "^1.7.0",
-    "angular-ui-router": "^1.0.18",
-    "lodash": "^4.17.10"
+    "angular": "=1.6.0",
+    "angular-translate": "^2.18.1",
+    "angular-translate-loader-partial": "^2.18.1",
+    "angular-ui-router": "^1.0.18"
   },
   "devDependencies": {
-    "@babel/register": "^7.0.0-beta.49",
-    "babel": "latest",
-    "babel-cli": "latest",
-    "babel-core": "latest",
-    "babel-plugin-transform-es2015-modules-commonjs": "latest",
-    "babel-register": "latest",
     "browser-sync": "latest",
     "browser-sync-spa": "latest",
     "cross-env": "latest",
@@ -65,9 +60,10 @@
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "merge-stream": "latest",
+    "npmfiles": "^0.1.1",
     "streamqueue": "^1.1.2",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.1",
+    "typescript": "=2.1.5",
     "uglify-save-license": "latest",
     "wiredep": "latest"
   }

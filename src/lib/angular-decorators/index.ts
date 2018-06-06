@@ -224,7 +224,7 @@ export function Service(options: any) {
 	};
 }
 
-export function Directive(options?: ng.IDirective) {
+export function Directive(options?: any) {
 	return function (target: any) {
 		target.$$type = "directive";
 		target.$$options = options;

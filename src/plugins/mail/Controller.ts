@@ -6,16 +6,43 @@ import DataModel from "./DataModel";
  * @class Core.plugins.mail.Controller
  */
 export default class Controller {
-	ViewModel = ViewModel;
+	ViewModel: ViewModel;
 
-	mail;
+	//region data models
+	mail: DataModel;
+
+	//endregion
+
 
 	constructor(cfg: any = {}) {
-		console.info('Controller', arguments);
+		console.info("Controller", arguments);
 		this.mail = new DataModel();
-		new this.ViewModel({
-			scope: cfg.scope,
-			el: cfg.el
-		});
+	}
+
+	destructor() {
+
+	}
+
+	onReady() {
+		this.ViewModel = new ViewModel();
+		this.ViewModel.scope = this;
+		this.ViewModel.mail = this.mail;
+		document.querySelector("[type=\"submit\"]")
+				.addEventListener("click", this.ViewModel.submit.bind(this.ViewModel));
+	}
+
+	getLabel(text: String): String {
+		let result: String = "";
+		switch (text) {
+			case "code":
+				result = "ШПИ";
+				break;
+			case "index":
+				result = "index";
+				break;
+			default:
+				result = text;
+		}
+		return result;
 	}
 }

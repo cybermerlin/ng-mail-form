@@ -3,7 +3,7 @@
 	
 	var br = require('./baseResponses');
 
-	module.exports.route = function (handles, pathname, response, request) {
+	module.exports.getRoute = function (handles, pathname, response, request) {
 		console.log("Requested " + pathname + " > isIsset: " + (typeof handles[pathname] === 'function'));
 		
 		br.response = response;
@@ -26,20 +26,14 @@
 			}
 
 			if (url.length) {
-				handles[url](response, request, id);
-				break;
+				return {route: handles[url], id};
 			}
 		}
 		console.log('router has URL > ', url);
 
 		if (!url) {
 			if (typeof handles[pathname] === 'function') {
-				handles[pathname](response, request);
-			} else {
-				console.log("No request handler found for " + pathname);
-				response.writeHead(404, {"Content-Type": "application/json"});
-				var json = JSON.stringify({"content": {"error": "Не найден обработчик для " + pathname}});
-				response.end(json);
+				return {route: handles[pathname]};
 			}
 		}
 	};

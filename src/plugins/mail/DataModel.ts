@@ -1,8 +1,12 @@
-import Core from "../../lib/core/index";
 import api from "./API";
+import {validation as checkPostalCode} from "../../lib/mail-track-code";
+import * as angular from "angular";
 
 
-export default class extends Core.data.Model {
+/**
+ * @class Core.plugins.mail.DataModel
+ */
+export default class {
 	proxy = {
 		type: "rest",
 		url: api
@@ -62,4 +66,26 @@ export default class extends Core.data.Model {
 		"index", "address", "sending", "type", "recipient",
 		{name: "weight", type: "float"}
 	];
+
+	save() {
+		if ( !this.isDirty() || !this.isValid() ) return Promise.reject('Not valid form');
+		return angular['$http'].post('/mail', this.get())
+				.then((resp) => {alert('saved'); return resp.content;})
+				.catch((e) => {alert(e.status +''+ e.data);})
+	}
+	get() {
+		return {code: '343', index: '3434'};
+	}
+	isDirty() {
+		return true;
+	}
+	isValid() {
+		return this.validate().length === 0;
+	}
+	validate() {
+		const v = this.code;
+		let result = [];
+		if(!checkPostalCode(v)) result.push('Code is not correct');
+		return result;
+	}
 }

@@ -5,7 +5,7 @@ const path = require('path'),
       pattern: ['gulp-*', 'uglify', 'del']
     });
 
-gulp.task('other', ['copyVendorImages', 'copyVendorJSON'], function() {
+gulp.task('other', [/*'copyVendorImages', */'copyVendorJSON'], function() {
   const fileFilter = $.filter(function(file) {
     return file.stat.isFile();
   });

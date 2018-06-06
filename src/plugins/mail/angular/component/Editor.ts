@@ -9,4 +9,17 @@ import Controller from "../../../../plugins/mail/Controller";
 	}
 })
 export default class extends Controller {
+	$onInit() {
+		this.onReady();
+	}
+
+	$onDestroy() {
+		this.destructor();
+	}
+
+	$onChanges(changes) {
+		if (changes.mail) {
+
+		}
+	}
 };

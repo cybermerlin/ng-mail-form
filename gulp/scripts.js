@@ -19,10 +19,8 @@ function buildTypeScripts() {
 function buildScripts() {
   buildTypeScripts();
   return gulp.src([
-        path.join(conf.paths.src, '/lib/stand.js'),
-        path.join(conf.paths.src, '/lib/**/*.js'),
+        path.join(conf.paths.tmpTS, '/lib/stand.js'),
         path.join(conf.paths.tmpTS, '/lib/**/*.js'),
-        path.join(conf.paths.src, '/**/*.js'),
         path.join(conf.paths.tmpTS, '/**/*.js')
       ])
       .pipe($.size());

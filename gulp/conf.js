@@ -21,17 +21,10 @@ exports.paths = {
 	docs: 'docs',
   tmp: '.tmp',
   tmpTS: '.tmp/ts',
-  e2e: 'e2e'
-};
-
-/**
- *  Wiredep is the lib which inject  dependencies in your project
- *  Mainly used to inject script tags in the index.html but also used
- *  to inject css preprocessor deps and js files in karma
- */
-exports.wiredep = {
-  exclude: [/\/bootstrap\.js$/, /\/bootstrap-sass\/.*\.js/, /\/require\.js/],
-  directory: 'node_modules'
+  e2e: 'e2e',
+  
+  // just write npm names such u want to inject into your build packete
+  node_modules: []
 };
 
 /**

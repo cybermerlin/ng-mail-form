@@ -8,7 +8,6 @@ const path = require('path'),
 
     $ = require('gulp-load-plugins')(),
 
-    wiredep = require('wiredep').stream,
     _ = require('lodash');
 
 function buildSCSS() {
@@ -37,7 +36,6 @@ function buildSCSS() {
         path.join(conf.paths.src, '/sass/main.scss')
       ])
       .pipe($.inject(injectFiles, injectOptions))
-      .pipe(wiredep(_.extend({}, conf.wiredep)))
       .pipe($.sourcemaps.init())
       .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
       .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))

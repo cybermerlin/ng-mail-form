@@ -1,26 +1,47 @@
 const path = require('path'),
     gulp = require('gulp'),
-    conf = require('./conf'),
-
     $ = require('gulp-load-plugins')(),
-
-    wiredep = require('wiredep').stream,
+    npmfiles = require('npmfiles'),
     _ = require('lodash'),
+    browserSync = require('browser-sync'),
+    conf = require('./conf');
 
-    browserSync = require('browser-sync');
 
-
-function injectAlone(options) {
-  const injectStyles = gulp.src(options.css, {read: false});
-
+function injectAlone(options = {}) {
   const injectOptions = {
     ignorePath: [conf.paths.src, path.join(conf.paths.tmp, '/serve')],
     addRootSlash: false
   };
 
-  return gulp.src(options.paths)
-      .pipe($.inject(injectStyles, injectOptions))
-      .pipe(wiredep(_.extend({}, conf.wiredep)))
+  let result = gulp.src(options.paths);
+  if ( options.styles )
+    result = result.pipe(
+        $.inject(gulp.src(options.styles, {read: false}), injectOptions));
+  if ( options.scripts )
+    result = result.pipe(
+        $.inject(
+            gulp.src(options.scripts)
+                .on('error', conf.errorHandler('AngularFilesort')),
+            injectOptions
+        ));
+  if ( options.partials )
+    result = result.pipe(
+        $.inject(gulp.src(options.partials, {read: false}), {
+          starttag: '<!-- inject:partials -->',
+          ignorePath: path.join(conf.paths.tmp, '/partials'),
+          addRootSlash: false
+        }));
+  if ( options.vendors )
+    result = result.pipe(
+        $.inject(gulp.src(npmfiles({nodeModulesPath: './node_modules/'})),
+            {
+              relative: true,
+              starttag: '<!-- npm:js -->',
+              ignorePath: [conf.paths.src, path.join(conf.paths.tmp, '/serve')],
+              addRootSlash: false
+            }));
+
+  return result
       .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve')));
 }
 
@@ -30,49 +51,36 @@ gulp.task('inject-reload', ['inject'], function() {
 });
 
 gulp.task('inject',
-    ['partials', 'scripts', 'styles', 'inject404', 'copyVendorImages', 'copyVendorJSON'],
+    ['partials', 'scripts', 'styles', 'inject404'/*, 'copyVendorImages'*/, 'copyVendorJSON'],
     function() {
-      const injectStyles = gulp.src([
-            path.join(conf.paths.tmp, '/serve/styles/styles.css'),
-            path.join(conf.paths.tmp, '/serve/styles/main.css'),
-            path.join('!' + conf.paths.tmp, '/serve/styles/vendor.css')
-          ], {read: false}),
-
-          injectScripts = gulp.src([
-                path.join(conf.paths.src, '/lib/**/*.{js|ts}'),
-                path.join(conf.paths.src, '/**/*.static.js'),
-                path.join(conf.paths.src, '/**/*.model.js'),
-                path.join(conf.paths.src, '/**/*.store.js'),
-                path.join(conf.paths.src, '/**/*.data.js'),
-                path.join(conf.paths.src, '/index.js'),
-                path.join(conf.paths.src, '/pages/**/*.module.js'),
-                path.join(conf.paths.src, '/plugins/**/*.js'),
-                path.join(conf.paths.src, '/pages/**/*.js')
-              ])
-              .on('error', conf.errorHandler('AngularFilesort')),
-
-          injectOptions = {
-            ignorePath: [conf.paths.src, path.join(conf.paths.tmp, '/serve')],
-            addRootSlash: false
-          },
-          partialsInjectFile = gulp.src(path.join(conf.paths.tmp, '/partials/templateCacheHtml.js'), {read: false}),
-          partialsInjectOptions = {
-            starttag: '<!-- inject:partials -->',
-            ignorePath: path.join(conf.paths.tmp, '/partials'),
-            addRootSlash: false
-          };
-
-      return gulp.src(path.join(conf.paths.src, '/index.html'))
-          .pipe($.inject(injectStyles, injectOptions))
-          .pipe($.inject(injectScripts, injectOptions))
-          .pipe($.inject(partialsInjectFile, partialsInjectOptions))
-          .pipe(wiredep(_.extend({}, conf.wiredep)))
-          .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve')));
-    });
+      return injectAlone({
+        paths: path.join(conf.paths.src, '/index.html'),
+        styles: [
+          path.join(conf.paths.tmp, '/serve/styles/styles.css'),
+          path.join(conf.paths.tmp, '/serve/styles/main.css'),
+          path.join('!' + conf.paths.tmp, '/serve/styles/vendor.css')
+        ],
+        scripts: [
+          path.join(conf.paths.src, '/lib/**/*.{js|ts}'),
+          path.join(conf.paths.src, '/**/*.static.js'),
+          path.join(conf.paths.src, '/**/*.model.js'),
+          path.join(conf.paths.src, '/**/*.store.js'),
+          path.join(conf.paths.src, '/**/*.data.js'),
+          path.join(conf.paths.src, '/index.js'),
+          path.join(conf.paths.src, '/pages/**/*.module.js'),
+          path.join(conf.paths.src, '/plugins/**/*.js'),
+          path.join(conf.paths.src, '/pages/**/*.js')
+        ],
+        partials: [
+          path.join(conf.paths.tmp, '/partials/templateCacheHtml.js')
+        ]
+      });
+    }
+);
 
 gulp.task('inject404', ['styles404'], function() {
   return injectAlone({
-    css: [
+    styles: [
       path.join('!' + conf.paths.tmp, '/serve/styles/vendor.css'),
       path.join(conf.paths.tmp, '/serve/styles/404.css')
     ],
